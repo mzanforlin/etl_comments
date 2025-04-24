@@ -6,7 +6,9 @@ import json
 
 url = 'https://jsonplaceholder.typicode.com/posts'
 
-response = requests.get(url)
-resp = response.json()
+response_status = requests.get(url).status_code
+response_json = requests.get(url)
+resp = response_json.json()
+df = pd.DataFrame(resp).json
 
-print(resp)
+display(df)
