@@ -28,9 +28,18 @@ def extrair_dados():
     if resp.status_code == 200:
         dados_json = resp.json()
         df = pd.DataFrame(dados_json)
-        df_final = print(df)
-        return df_final
+        return df
     else:
-       print(f'deu um erro aqui : {resp.status_code()}')
+       print(f'deu um erro aqui : {resp.status_code}')
        return None
     
+def salvar_dados(df):
+    salvar = df.to_sql('comentarios',engine,if_exists = 'replace', index = False, schema = 'dbo')
+    print("Dados salvos com sucesso!")
+
+
+# Execução principal
+if __name__ == "__main__":
+    df_extraido = extrair_dados()
+    if df_extraido is not None:
+        salvar_dados(df_extraido)
